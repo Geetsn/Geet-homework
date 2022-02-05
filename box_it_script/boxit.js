@@ -14,10 +14,12 @@ function boxIt(names) {
   const SideLine = "┃";
   const LeftSideT = "┣";
   const RightSideT = "┫";
+  let boxedNames = ""
   // Print an empty box
   if (names.length === 0) {
-    console.log(TopLeftCorner + TopRightCorner);
-    console.log(BottomLeftCorner + BottomRightCorner);
+    boxedNames += TopLeftCorner + TopRightCorner + "\n";
+    boxedNames += BottomLeftCorner + BottomRightCorner;
+    return boxedNames
   } else {
     // Find the longest name length
     let maxLength = 0;
@@ -27,19 +29,18 @@ function boxIt(names) {
       }
     });
     // All names in the largest box with dividers
-    console.log(TopLeftCorner + MiddleLine.repeat(maxLength) + TopRightCorner);
+    boxedNames += TopLeftCorner + MiddleLine.repeat(maxLength) + TopRightCorner +"\n";
     names.forEach((name, index) => {
-      console.log(
-        SideLine + name + " ".repeat(maxLength - name.length) + SideLine
-      );
+      boxedNames += SideLine + name + " ".repeat(maxLength - name.length) + SideLine +"\n";
+    
       if (index < names.length - 1) {
-        console.log(LeftSideT + MiddleLine.repeat(maxLength) + RightSideT);
+        boxedNames += LeftSideT + MiddleLine.repeat(maxLength) + RightSideT +"\n";
       }
     });
-    console.log(
-      BottomLeftCorner + MiddleLine.repeat(maxLength) + BottomRightCorner
-    );
+    
+    boxedNames +=  BottomLeftCorner + MiddleLine.repeat(maxLength) + BottomRightCorner 
+    return boxedNames
   }
 }
 
-boxIt(names);
+console.log(boxIt(names));
