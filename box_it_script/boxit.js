@@ -26,16 +26,19 @@ function boxIt(names) {
         maxLength = name.length;
       }
     });
-    names.forEach((name) => {
-      // All names in the largest name box
+    // All names in the largest box with dividers
+    console.log(TopLeftCorner + MiddleLine.repeat(maxLength) + TopRightCorner);
+    names.forEach((name, index) => {
       console.log(
-        TopLeftCorner + MiddleLine.repeat(maxLength) + TopRightCorner
+        SideLine + name + " ".repeat(maxLength - name.length) + SideLine
       );
-      console.log(SideLine + name + " ".repeat(maxLength-name.length) + SideLine);
-      console.log(
-        BottomLeftCorner + MiddleLine.repeat(maxLength) + BottomRightCorner
-      );
+      if (index < names.length - 1) {
+        console.log(LeftSideT + MiddleLine.repeat(maxLength) + RightSideT);
+      }
     });
+    console.log(
+      BottomLeftCorner + MiddleLine.repeat(maxLength) + BottomRightCorner
+    );
   }
 }
 
