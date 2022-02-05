@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 // Extract input parameters
 const names = [];
 for (let i = 2; i < process.argv.length; i++) {
