@@ -19,14 +19,21 @@ function boxIt(names) {
     console.log(TopLeftCorner + TopRightCorner);
     console.log(BottomLeftCorner + BottomRightCorner);
   } else {
+    // Find the longest name length
+    let maxLength = 0;
     names.forEach((name) => {
-      // A name in a box
+      if (name.length > maxLength) {
+        maxLength = name.length;
+      }
+    });
+    names.forEach((name) => {
+      // All names in the largest name box
       console.log(
-        TopLeftCorner + MiddleLine.repeat(name.length) + TopRightCorner
+        TopLeftCorner + MiddleLine.repeat(maxLength) + TopRightCorner
       );
-      console.log(SideLine + name + SideLine);
+      console.log(SideLine + name + " ".repeat(maxLength-name.length) + SideLine);
       console.log(
-        BottomLeftCorner + MiddleLine.repeat(name.length) + BottomRightCorner
+        BottomLeftCorner + MiddleLine.repeat(maxLength) + BottomRightCorner
       );
     });
   }
