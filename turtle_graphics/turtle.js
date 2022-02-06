@@ -30,7 +30,20 @@ class Turtle {
     }
     return this; // For chaining
   }
+  right() {
+    this.currDirection += 1;
+    this.currDirection %= 4;
+    return this;
+  }
+  left() {
+    this.currDirection -= 1;
+    this.currDirection %= 4;
+    return this;
+  }
+  allPoints() {
+    return this.visitedPoints;
+  }
 }
 
-const myTurtle = new Turtle(0, 0).forward(3);
-console.log(myTurtle);
+const myTurtle = new Turtle(0, 0).forward(3).right().left().forward(3);
+console.log(myTurtle.allPoints());
