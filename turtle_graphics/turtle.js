@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 class Turtle {
   constructor(x, y) {
     this.currPoint = [x, y];
@@ -69,9 +71,9 @@ class Turtle {
             (point) => point[0] === x && point[1] === y
           ) > -1
         ) {
-          gridLine += "■";
+          gridLine += "*";
         } else {
-          gridLine += "□";
+          gridLine += " ";
         }
       }
       grid.push(gridLine);
@@ -80,18 +82,33 @@ class Turtle {
   }
 }
 
-const yourTurtle = new Turtle(0, 4)
-  .forward(3)
-  .left()
-  .forward(3)
-  .right()
-  .forward(5)
-  .right()
-  .forward(8)
-  .right()
-  .forward(5)
-  .right()
-  .forward(3)
-  .left()
-  .forward(3)
-  .print();
+function runTurtle(cmdString) {
+  let x = 0;
+  let y = 0;
+  const commands = cmdString.split("-");
+  if (commands[0][0] === "t") {
+    const point = commands[0].slice(1).split(",");
+    x = parseInt(point[0]);
+    y = parseInt(point[1]);
+  }
+  const myTurtle = new Turtle(x, y);
+
+  commands.forEach((cmd) => {
+    switch (cmd[0]) {
+      case "f":
+        myTurtle.forward(parseInt(cmd.slice(1)));
+        break;
+      case "r":
+        myTurtle.right();
+        break;
+      case "l":
+        myTurtle.left();
+        break;
+      default:
+        break;
+    }
+  });
+  myTurtle.print();
+}
+
+runTurtle(process.argv[2]);
