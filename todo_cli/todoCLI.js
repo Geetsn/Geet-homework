@@ -19,17 +19,34 @@ function showList() {
   });
 }
 
+function newEntry(entry = "") {
+  if (entry === "") {
+    console.log("What?");
+    rl.prompt();
+  } else {
+    theList.push([false, entry]);
+  }
+}
+
 console.log("Welcome to Todo CLI!\n--------------");
 menuPrompt();
 
-rl.on("line", (action) => {
-  if (action === "q") {
+let curCmd = "";
+rl.on("line", (input) => {
+  if (input === "q") {
     rl.close();
     return;
-  } else if (action === "v") {
+  } else if (input === "v") {
     showList();
+    menuPrompt();
+  } else if (input === "n") {
+    curCmd = "n";
+    newEntry();
+  } else if (curCmd === "n") {
+    newEntry(input);
+    curCmd = "";
+    menuPrompt();
   }
-  menuPrompt();
 });
 
 const theList = [
