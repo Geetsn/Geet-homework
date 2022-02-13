@@ -35,12 +35,19 @@ function completeItem(num) {
   }
 }
 
+function deleteItem(num) {
+  if (num >= 0 && num < theList.length) {
+    console.log(`Deleted "${theList.splice(num, 1)[0][1]}"`);
+  }
+}
+
 console.log("Welcome to Todo CLI!\n--------------");
 menuPrompt();
 
 let curCmd = "";
 rl.on("line", (input) => {
   if (input === "q") {
+    console.log("See you soon! 😊");
     rl.close();
     return;
   } else if (input === "v") {
@@ -57,6 +64,10 @@ rl.on("line", (input) => {
     let num = parseInt(input.slice(1));
     completeItem(num);
     menuPrompt();
+  } else if (input[0] === "d") {
+    let num = parseInt(input.slice(1));
+    deleteItem(num);
+    menuPrompt();
   }
 });
 
@@ -66,4 +77,4 @@ const theList = [
   [false, "Buy Snickerdoodles"],
   [false, "Fix the climate"],
   [false, "Find a cure for aging"],
-];
+ ];
