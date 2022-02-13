@@ -6,6 +6,8 @@ const rl = readline.createInterface({
   prompt: "> ",
 });
 
+const theList = [];
+
 function menuPrompt() {
   const theMenu = "(v)View . (n) New . (cX) Complete . (dX) Delete . (q) Quit";
   console.log(theMenu);
@@ -13,10 +15,14 @@ function menuPrompt() {
 }
 
 function showList() {
-  theList.forEach((entry, index) => {
-    let status = entry[0] === true ? "✔" : " ";
-    console.log(`${index} [${status}] ${entry[1]}`);
-  });
+  if (theList.length <= 0) {
+    console.log("List is empty...");
+  } else {
+    theList.forEach((entry, index) => {
+      let status = entry[0] === true ? "✔" : " ";
+      console.log(`${index} [${status}] ${entry[1]}`);
+    });
+  }
 }
 
 function newEntry(entry = "") {
@@ -70,11 +76,3 @@ rl.on("line", (input) => {
     menuPrompt();
   }
 });
-
-const theList = [
-  [true, "Take out the trash"],
-  [true, "Buy toothpaste"],
-  [false, "Buy Snickerdoodles"],
-  [false, "Fix the climate"],
-  [false, "Find a cure for aging"],
- ];
