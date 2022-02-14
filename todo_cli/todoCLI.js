@@ -52,14 +52,14 @@ menuPrompt();
 
 let curCmd = "";
 rl.on("line", (input) => {
-  if (input === "q") {
+  if (input === "q" && curCmd === "") {
     console.log("See you soon! 😊");
     rl.close();
     return;
-  } else if (input === "v") {
+  } else if (input === "v" && curCmd === "") {
     showList();
     menuPrompt();
-  } else if (input === "n") {
+  } else if (input === "n" && curCmd === "") {
     curCmd = "n";
     newEntry();
   } else if (curCmd === "n") {
