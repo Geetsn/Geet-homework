@@ -9,7 +9,8 @@ const rl = readline.createInterface({
 const theList = [];
 
 function menuPrompt() {
-  const theMenu = "(v)View . (n) New . (cX) Complete . (dX) Delete . (q) Quit";
+  const theMenu =
+    "(v)View · (n) New · (cX) Complete · (dX) Delete · (q) Quit";
   console.log(theMenu);
   rl.prompt();
 }
@@ -19,8 +20,8 @@ function showList() {
     console.log("List is empty...");
   } else {
     theList.forEach((entry, index) => {
-      let status = entry[0] === true ? "✔" : " ";
-      console.log(`${index} [${status}] ${entry[1]}`);
+      let status = entry.complete === true ? "✔" : " ";
+      console.log(`${index} [${status}] ${entry.title}`);
     });
   }
 }
@@ -30,20 +31,21 @@ function newEntry(entry = "") {
     console.log("What?");
     rl.prompt();
   } else {
-    theList.push([false, entry]);
+    theList.push({ complete: false, title: entry });
   }
 }
 
 function completeItem(num) {
   if (num >= 0 && num < theList.length) {
-    theList[num][0] = true;
-    console.log(`Completed "${theList[num][1]}"`);
+    theList[num].complete = true;
+    console.log(`Completed "${theList[num].title}"`);
   }
 }
 
 function deleteItem(num) {
   if (num >= 0 && num < theList.length) {
-    console.log(`Deleted "${theList.splice(num, 1)[0][1]}"`);
+    const deletedItem = theList.splice(num, 1)[0];
+    console.log(`Deleted "${deletedItem.title}"`);
   }
 }
 
@@ -73,6 +75,8 @@ rl.on("line", (input) => {
   } else if (input[0] === "d") {
     let num = parseInt(input.slice(1));
     deleteItem(num);
+    menuPrompt();
+  } else if (curCmd === "") {
     menuPrompt();
   }
 });
