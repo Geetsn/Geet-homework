@@ -1,3 +1,4 @@
+const fs = require("fs");
 const readline = require("readline");
 
 const rl = readline.createInterface({
@@ -10,7 +11,7 @@ const theList = [];
 
 function menuPrompt() {
   const theMenu =
-    "(v)View · (n) New · (cX) Complete · (dX) Delete · (q) Quit";
+    "(v)View · (n) New · (cX) Complete · (dX) Delete · (s) Save · (q) Quit";
   console.log(theMenu);
   rl.prompt();
 }
@@ -49,6 +50,16 @@ function deleteItem(num) {
   }
 }
 
+function saveList(filename = "") {
+  if (filename === "") {
+    console.log("Where? (myTodos.json)");
+    rl.prompt();
+  } else {
+    fs.writeFileSync(`./${filename}`, JSON.stringify(theList));
+    console.log(`List saved to "${filename}"`);
+  }
+}
+
 console.log("Welcome to Todo CLI!\n--------------");
 menuPrompt();
 
@@ -75,6 +86,16 @@ rl.on("line", (input) => {
   } else if (input[0] === "d") {
     let num = parseInt(input.slice(1));
     deleteItem(num);
+    menuPrompt();
+  } else if (input === "s" && curCmd === "") {
+    curCmd = "s";
+    saveList();
+  } else if (curCmd === "s") {
+    if (input === "") {
+      input = "myTodos.json";
+    }
+    saveList(input);
+    curCmd = "";
     menuPrompt();
   } else if (curCmd === "") {
     menuPrompt();
