@@ -8,6 +8,7 @@ exports.up = function (knex) {
     cohorts.string("name");
     cohorts.string("logoUrl");
     cohorts.text("members");
+    cohorts.timestamp("created_at").defaultTo(knex.fn.now());
   });
 };
 

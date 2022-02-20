@@ -1,0 +1,9 @@
+<h3><%- cohort.name %></h3>
+<img src="<%- cohort.logoUrl %>" alt="logo" />
+<p><%- cohort.members %></p>
+<a href="/cohorts/<%- cohort.id %>/edit">Edit</a>
+
+<form action="/cohorts/<%- cohort.id %>" method="POST">
+  <input type="hidden" name="_method" value="DELETE">
+  <input type="submit" class="btn btn-outline-danger" value="Delete">
+</form>

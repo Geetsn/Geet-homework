@@ -9,11 +9,12 @@ exports.seed = async function (knex) {
   const cohorts = Array.from({ length: 10 }).map(() => {
     return {
       name: faker.lorem.words(2),
-      logoUrl: faker.image.avatar(),
+      logoUrl: faker.image.cats(30,30),
       members: faker.lorem
         .words(faker.datatype.number({ min: 15, max: 25 }))
         .split(" ")
         .join(","),
+      created_at: faker.date.past(),
     };
   });
   await knex("cohorts").insert(cohorts);

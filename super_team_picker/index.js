@@ -1,12 +1,30 @@
 const express = require("express");
 const logger = require("morgan");
-const cohortsRouter = require('./routes/cohorts.js');
+const methodOverride = require("method-override");
+const cohortsRouter = require("./routes/cohorts.js");
 
 const app = express();
 
 app.use(logger("dev"));
 
-app.use('/cohorts', cohortsRouter)
+app.use(express.urlencoded({ extended: true }));
+
+
+app.use(
+  methodOverride((req, res) => {
+    if (req.body && req.body._method) {
+      const method = req.body._method;
+      return method;
+    }
+  })
+);
+
+
+
+app.set("view engine", "ejs");
+app.set("views", "views");
+
+app.use("/cohorts", cohortsRouter);
 
 app.get("/", (request, response) => {
   response.send("<h1>Super Team Picker<h1>");
@@ -15,5 +33,7 @@ app.get("/", (request, response) => {
 const PORT = 3000;
 const DOMAIN = "localhost";
 app.listen(PORT, DOMAIN, () => {
-  console.log(`Server is listening on http://${DOMAIN}:${PORT}\nCtrl+c to end server`);
+  console.log(
+    `Server is listening on http://${DOMAIN}:${PORT}\nCtrl+c to end server`
+  );
 });

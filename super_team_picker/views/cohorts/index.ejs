@@ -1,0 +1,5 @@
+<% cohorts.forEach(cohort => { %>
+  <a href="/cohorts/<%- cohort.id %>"><h3><%- cohort.name %></h3></a>
+ <img src="<%- cohort.logoUrl %>" alt="logo">
+ <p><%- cohort.members %> </p>
+<% }) %>

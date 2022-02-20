@@ -1,0 +1,23 @@
+<div>
+  <input
+    type="text"
+    name="name"
+    placeholder="Cohort name"
+    value="<%- cohort ? cohort.name : '' %>"
+  />
+</div>
+<div>
+  <input
+    type="url"
+    name="logoUrl"
+    placeholder="e.g. http://imgurl.com/myPic.jpg"
+    value="<%= cohort ? cohort.logoUrl : '' %>"
+  />
+</div>
+<div>
+  <textarea name="members" placeholder="member names" cols="60" rows="5">
+ <% if (cohort) { %>
+   <%- cohort.members %>
+  <% } %> </textarea
+  >
+</div>
