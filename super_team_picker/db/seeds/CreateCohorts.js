@@ -13,7 +13,7 @@ exports.seed = async function (knex) {
       members: faker.lorem
         .words(faker.datatype.number({ min: 15, max: 25 }))
         .split(" ")
-        .join(","),
+        .join(", "),
       created_at: faker.date.past(),
     };
   });

@@ -29,6 +29,38 @@ router.post("/", (req, res) => {
     });
 });
 
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+function assignTeams(method, quantity = 0, members) {
+  let names = members.split(",");
+
+  names.forEach((name, index, names) => {
+    names[index] = name.trim();
+  });
+  names = shuffle(names);
+
+  let teams = [];
+  if (method == "TeamCount") {
+    while (names.length > 0) {
+      for (let i = 0; i < quantity && names.length > 0; i++) {
+        teams[i] = teams[i] ? teams[i] + ", " + names.pop() : names.pop();
+      }
+    }
+  } else if (method == "NumberPerTeam") {
+    for (let j = 0; names.length > 0; j++) {
+      for (let i = 0; i < quantity && names.length > 0; i++) {
+        teams[j] = teams[j] ? teams[j] + ", " + names.pop() : names.pop();
+      }
+    }
+  }
+  return teams;
+}
 router.get("/:id", (req, res) => {
   knex("cohorts")
     .where("id", req.params.id)
@@ -37,7 +69,16 @@ router.get("/:id", (req, res) => {
       if (!cohort) {
         res.send("No cohort found");
       } else {
-        res.render("cohorts/show", { cohort: cohort });
+        res.render("cohorts/show", {
+          cohort: cohort,
+          method: req.query.method,
+          quantity: req.query.quantity,
+          teams: assignTeams(
+            req.query.method,
+            req.query.quantity,
+            cohort.members
+          ),
+        });
       }
     });
 });
@@ -50,7 +91,6 @@ router.get("/:id/edit", (req, res) => {
       res.render("cohorts/edit", { cohort: cohort });
     });
 });
-
 
 router.patch("/:id", (req, res) => {
   knex("cohorts")
@@ -73,7 +113,5 @@ router.delete("/:id", (req, res) => {
       res.redirect("/cohorts");
     });
 });
-
-
 
 module.exports = router;

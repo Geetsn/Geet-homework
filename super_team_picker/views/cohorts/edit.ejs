@@ -1,6 +1,9 @@
-<h1>Edit Cohort</h1>
+<%- include("../partials/header.ejs") %>
+<main class="px-4">
 <form action="/cohorts/<%- cohort.id %>" method="POST">
   <input type="hidden" name="_method" value="PATCH" />
   <%- include("../partials/formInput.ejs") %>
-  <input type="submit" value="Edit Cohort" class="btn btn-outline-success" />
+  <button type="submit" class="btn btn-outline-primary">Update</button>
 </form>
+</main>
+<%- include("../partials/footer.ejs") %>

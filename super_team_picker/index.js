@@ -2,10 +2,13 @@ const express = require("express");
 const logger = require("morgan");
 const methodOverride = require("method-override");
 const cohortsRouter = require("./routes/cohorts.js");
+const path = require("path");
 
 const app = express();
 
 app.use(logger("dev"));
+
+app.use(express.static(path.join(__dirname, "public")))
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -27,7 +30,7 @@ app.set("views", "views");
 app.use("/cohorts", cohortsRouter);
 
 app.get("/", (request, response) => {
-  response.send("<h1>Super Team Picker<h1>");
+  response.redirect("/cohorts");
 });
 
 const PORT = 3000;

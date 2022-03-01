@@ -1,23 +1,34 @@
-<div>
-  <input
-    type="text"
-    name="name"
-    placeholder="Cohort name"
-    value="<%- cohort ? cohort.name : '' %>"
-  />
-</div>
-<div>
+<div class="form-group">
+  <label for="logoUrl">Logo Url</label>
   <input
     type="url"
     name="logoUrl"
-    placeholder="e.g. http://imgurl.com/myPic.jpg"
+    class="form-control"
+    placeholder="e.g. https://www.example.com/some.png"
     value="<%= cohort ? cohort.logoUrl : '' %>"
   />
 </div>
-<div>
-  <textarea name="members" placeholder="member names" cols="60" rows="5">
- <% if (cohort) { %>
-   <%- cohort.members %>
-  <% } %> </textarea
+<div class="form-group">
+  <label for="name">Name</label>
+  <input
+    type="text"
+    name="name"
+    class="form-control"
+    placeholder="Flying Funks"
+    value="<%- cohort ? cohort.name : '' %>"
+  />
+</div>
+
+<div class="form-group">
+  <label for="members">Members</label>
+  <textarea
+    class="form-control"
+    name="members"
+    placeholder="Jon Snow, Daenerys, Melisandre, Arya Stark"
+    rows="3"
+  >
+   <% if (cohort) { %>
+     <%- cohort.members %>
+    <% } %> </textarea
   >
 </div>
