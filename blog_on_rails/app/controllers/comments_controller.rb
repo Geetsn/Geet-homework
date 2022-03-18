@@ -6,8 +6,8 @@ class CommentsController < ApplicationController
     if @comment.save
       redirect_to post_path(@post)
     else
-    @comments = @post.comments.order(created_at: :desc)
-    render 'posts/show', status: 303
+      @comments = @post.comments.order(created_at: :desc)
+      render 'posts/show', status: 303
     end
   rescue => e
     redirect_to root_path, alert: e.message
