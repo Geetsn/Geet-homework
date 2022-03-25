@@ -14,14 +14,6 @@
           <p><%= @user.errors.full_messages_for(:email).join(", ") %></p>
         <% end %>
       </div>
-      <div class="input-group">
-        <%= form.label :password %>
-        <%= form.password_field :password, required: :required %>
-      </div>
-      <div class="input-group">
-        <%= form.label :password_confirmation %>
-        <%= form.password_field :password_confrimation, required: :required  %>
-      </div>
       <%= form.submit %>
     </div>
   <% end %>
