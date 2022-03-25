@@ -1,5 +1,8 @@
 class UsersController < ApplicationController
   before_action :authenticated_user!, except: %i[new create]
+  before_action :find_user, only: %i[edit update]
+  before_action :authorized_user!, only: %i[edit update]
+
   def new
     @user = User.new
   end
@@ -7,18 +10,16 @@ class UsersController < ApplicationController
   def create
     @user = User.new params.require(:user).permit(:name, :email, :password, :password_confirmation)
     if @user.save
+      session[:user_id] = @user.id
       redirect_to root_path, status: 303
     else
       render :new, status: 303
     end
   end
 
-  def edit
-    @user = User.find_by_id params[:id]
-  end
+  def edit; end
 
   def update
-    @user = User.find_by_id params[:id]
     if @user.update params.require(:user).permit(:name, :email, :password, :password_confirmation)
       redirect_to root_path, status: 303
     else
@@ -55,5 +56,15 @@ class UsersController < ApplicationController
       flash.alert = 'Current password does not match'
       render :change_password, status: 303
     end
+  end
+
+  private
+
+  def find_user
+    @user = User.find_by_id params[:id]
+  end
+
+  def authorized_user!
+    redirect_to root_path, { status: 303, alert: 'Not authorized' } unless can?(:crud, @user)
   end
 end

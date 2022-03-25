@@ -47,5 +47,7 @@ class Ability
     can :destroy, Comment do |comment|
       comment.user == user || comment.post.user == user
     end
+
+    can :crud, User, id: user.id
   end
 end
