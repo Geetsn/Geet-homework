@@ -26,4 +26,34 @@ class UsersController < ApplicationController
       render :edit, status: 303
     end
   end
+
+  def change_password
+    @user = User.new
+  end
+
+  def update_password
+    current_password = params[:current_password]
+    new_password = params[:new_password]
+    new_password_confirmation = params[:new_password_confirmation]
+    user = User.find_by_id current_user.id
+    if user&.authenticate current_password
+      if new_password == current_password
+        flash.alert = 'New password must be different'
+        render :change_password, status: 303
+      elsif new_password == new_password_confirmation
+        if user.update password: new_password
+          redirect_to root_path, { notice: 'Password updated', status: 303 }
+        else
+          flash.alert = 'Password update failed, try again'
+          render :change_password, status: 303
+        end
+      else
+        flash.alert = 'New password confirmation does not match'
+        render :change_password, status: 303
+      end
+    else
+      flash.alert = 'Current password does not match'
+      render :change_password, status: 303
+    end
+  end
 end
