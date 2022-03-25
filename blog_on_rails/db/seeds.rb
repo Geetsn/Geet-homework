@@ -6,11 +6,20 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+# First destrou all records from table comments due to FK constraint.
+# Comments.destroy_all
+
 # Destroy all records from table posts.
 Post.destroy_all
+User.destroy_all
 
 # Reset the primary key sequence to 1.
 ActiveRecord::Base.connection.reset_pk_sequence!(:posts)
+# ActiveRecord::Base.connection.reset_pk_sequence!(:comments)
+ActiveRecord::Base.connection.reset_pk_sequence!(:users)
+
+user = User.create name: "max", email: "m@example.com", password: "111"
+if user.persisted?
 
 # Bulk insert of 50 fake posts.
 Post.insert_all(
@@ -18,11 +27,12 @@ Post.insert_all(
     {
       title: Faker::Hacker.say_something_smart,
       body: Faker::ChuckNorris.fact,
+      user_id: user.id,
       created_at: Faker::Time.backward(days:365),
       updated_at: DateTime.now()
     }
   end
 )
-
+end
 # Show how many fake posts are in the table posts.
 puts Cowsay.say("Generated #{Post.count} posts using Faker.", :frogs)

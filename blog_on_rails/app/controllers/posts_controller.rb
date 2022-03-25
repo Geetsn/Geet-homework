@@ -1,5 +1,6 @@
-# postsController
 class PostsController < ApplicationController
+  before_action :authenticated_user!, except: [:index, :show]
+
   def index
     @posts = Post.order(created_at: :desc)
   end
@@ -26,6 +27,7 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new params.require(:post).permit(:title, :body)
+    @post.user = current_user
     if @post.save
       redirect_to post_path(@post) #{ status: 303, notice: 'Post created successfully' }
     else
@@ -41,9 +43,7 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find params[:id]
-    puts @post
     if @post.update params.require(:post).permit(:title, :body)
-      puts @post
       redirect_to post_path(@post), { status: 303, notice: 'Post updated successfully' }
     else
       render :edit, status: 303
