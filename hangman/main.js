@@ -1,38 +1,42 @@
 $(document).ready(() => {
-  const mysteryWord = "STRANGER"
-  const letterTag = "td"
+  const mysteryWord = "STRANGER";
+  const letterTag = "td";
+  let turn = 1;
 
   document.querySelectorAll("#keyboard td").forEach((element) => {
     element.addEventListener("click", alphabetClick);
   });
 
-  const mysteryWordElement = document.querySelector("#mysteryWord tr")
+  const mysteryWordElement = document.querySelector("#mysteryWord tr");
   for (let i = 0; i < mysteryWord.length; i++) {
-    mysteryWordElement.appendChild(document.createElement(letterTag))
+    mysteryWordElement.appendChild(document.createElement(letterTag));
   }
 
+  const imageElement = document.createElement("img");
+  imageElement.setAttribute("src", `./images/${turn}.jpg`);
+  document.querySelector("#Hangman").appendChild(imageElement);
+
   function showTheLetters(letter) {
-    let index = mysteryWord.indexOf(letter)
+    let index = mysteryWord.indexOf(letter);
     while (index > -1) {
-      mysteryWordElement.children[index].innerText = letter
-      index = mysteryWord.indexOf(letter, index+1)
+      mysteryWordElement.children[index].innerText = letter;
+      index = mysteryWord.indexOf(letter, index + 1);
     }
   }
 
-  function showTheHangman() { 
+  function showTheHangman(imageNumber) {
+    imageElement.setAttribute("src", `./images/${imageNumber}.jpg`);
   }
 
   function alphabetClick(event) {
-    const letterElement = event.target
+    const letterElement = event.target;
     if (letterElement.classList.contains("selected-letter")) {
-
-    }
-    else {
+    } else {
       letterElement.classList.add("selected-letter");
-      const letter = letterElement.innerText
-      mysteryWord.includes(letter) ? showTheLetters(letter) : showTheHangman();
+      const letter = letterElement.innerText;
+      mysteryWord.includes(letter)
+        ? showTheLetters(letter)
+        : showTheHangman(++turn);
     }
   }
-
-  
 });

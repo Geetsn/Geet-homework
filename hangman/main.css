@@ -24,3 +24,8 @@ tr {
   width: 20px;
   text-align: center;
 }
+
+#hangman > img {
+  width: 250px;
+  height: 250px;
+}
