@@ -18,3 +18,9 @@ tr {
   color: white;
   border: 1px solid white;
 }
+
+#mysteryWord td {
+  border-bottom: 1px solid grey;
+  width: 20px;
+  text-align: center;
+}
