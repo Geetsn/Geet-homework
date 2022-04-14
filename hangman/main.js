@@ -2,6 +2,11 @@ $(document).ready(() => {
   const mysteryWord = "STRANGER";
   const letterTag = "td";
   let turn = 1;
+  let correctCount = 0;
+  const MAX_TRIES = 6;
+  const victorySound = document.getElementById("victory");
+  const failSound = document.getElementById("fail");
+
 
   document.querySelectorAll("#keyboard td").forEach((element) => {
     element.addEventListener("click", alphabetClick);
@@ -19,6 +24,7 @@ $(document).ready(() => {
   function showTheLetters(letter) {
     let index = mysteryWord.indexOf(letter);
     while (index > -1) {
+      correctCount += 1;
       mysteryWordElement.children[index].innerText = letter;
       index = mysteryWord.indexOf(letter, index + 1);
     }
@@ -37,6 +43,23 @@ $(document).ready(() => {
       mysteryWord.includes(letter)
         ? showTheLetters(letter)
         : showTheHangman(++turn);
+    }
+    if (correctCount == mysteryWord.length) {
+      setTimeout(() => {
+        victorySound.play();
+        setTimeout(() => {
+          alert("Congratulations! You win!");
+        }, 2000);
+      }, 1000);
+    }
+
+    if (turn > MAX_TRIES) {
+      setTimeout(() => {
+        failSound.play();
+        setTimeout(() => {
+          alert("Better luck next time...");
+        }, 1000);
+      }, 300);
     }
   }
 });
